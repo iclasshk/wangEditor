@@ -130,8 +130,10 @@ Image.prototype = {
         // id
         const upTriggerId = getRandom('up-trigger')
         const upFileId = getRandom('up-file')
+        const upLinkId = getRandom('up-link')
         const linkUrlId = getRandom('link-url')
         const linkBtnId = getRandom('link-btn')
+        const linkLinkId = getRandom('link-link')
 
         // tabs 的配置
         const tabsConfig = [
@@ -143,6 +145,9 @@ Image.prototype = {
                     </div>
                     <div style="display:none;">
                         <input id="${upFileId}" type="file" multiple="multiple" accept="image/jpg,image/jpeg,image/png,image/gif,image/bmp"/>
+                    </div>
+                    <div>
+                        <input id="${upLinkId}" type="text" class="block" placeholder="超链接 http://..."/>
                     </div>
                 </div>`,
                 events: [
@@ -191,6 +196,9 @@ Image.prototype = {
                     <input id="${linkUrlId}" type="text" class="block" placeholder="图片链接"/></td>
                     <div class="w-e-button-container">
                         <button id="${linkBtnId}" class="right">插入</button>
+                    </div>
+                    <div>
+                        <input id="${linkLinkId}" type="text" class="block" placeholder="超链接 http://..."/>
                     </div>
                 </div>`,
                 events: [

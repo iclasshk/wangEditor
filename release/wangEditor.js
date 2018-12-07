@@ -2750,13 +2750,15 @@ Image.prototype = {
         // id
         var upTriggerId = getRandom('up-trigger');
         var upFileId = getRandom('up-file');
+        var upLinkId = getRandom('up-link');
         var linkUrlId = getRandom('link-url');
         var linkBtnId = getRandom('link-btn');
+        var linkLinkId = getRandom('link-link');
 
         // tabs 的配置
         var tabsConfig = [{
             title: '上传图片',
-            tpl: '<div class="w-e-up-img-container">\n                    <div id="' + upTriggerId + '" class="w-e-up-btn">\n                        <i class="w-e-icon-upload2"></i>\n                    </div>\n                    <div style="display:none;">\n                        <input id="' + upFileId + '" type="file" multiple="multiple" accept="image/jpg,image/jpeg,image/png,image/gif,image/bmp"/>\n                    </div>\n                </div>',
+            tpl: '<div class="w-e-up-img-container">\n                    <div id="' + upTriggerId + '" class="w-e-up-btn">\n                        <i class="w-e-icon-upload2"></i>\n                    </div>\n                    <div style="display:none;">\n                        <input id="' + upFileId + '" type="file" multiple="multiple" accept="image/jpg,image/jpeg,image/png,image/gif,image/bmp"/>\n                    </div>\n                    <div>\n                        <input id="' + upLinkId + '" type="text" class="block" placeholder="http://..."/>\n                    </div>\n                </div>',
             events: [{
                 // 触发选择图片
                 selector: '#' + upTriggerId,
@@ -2796,7 +2798,7 @@ Image.prototype = {
         }, // first tab end
         {
             title: '网络图片',
-            tpl: '<div>\n                    <input id="' + linkUrlId + '" type="text" class="block" placeholder="\u56FE\u7247\u94FE\u63A5"/></td>\n                    <div class="w-e-button-container">\n                        <button id="' + linkBtnId + '" class="right">\u63D2\u5165</button>\n                    </div>\n                </div>',
+            tpl: '<div>\n                    <input id="' + linkUrlId + '" type="text" class="block" placeholder="\u56FE\u7247\u94FE\u63A5"/></td>\n                    <div class="w-e-button-container">\n                        <button id="' + linkBtnId + '" class="right">\u63D2\u5165</button>\n                    </div>\n                    <div>\n                        <input id="' + linkLinkId + '" type="text" class="block" placeholder="http://..."/>\n                    </div>\n                </div>',
             events: [{
                 selector: '#' + linkBtnId,
                 type: 'click',
