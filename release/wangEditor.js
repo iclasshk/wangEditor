@@ -1417,7 +1417,7 @@ Link.prototype = {
                         var $link = $('#' + inputLinkId);
                         var $text = $('#' + inputTextId);
                         var link = $link.val();
-                        var text = $text.html();
+                        var text = $text.val();
                         _this._insertLink(text, link);
 
                         // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
