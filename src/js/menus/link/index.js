@@ -86,7 +86,7 @@ Link.prototype = {
                                 const $link = $('#' + inputLinkId)
                                 const $text = $('#' + inputTextId)
                                 const link = $link.val()
-                                const text = $text.val()
+                                const text = $text.html()
                                 this._insertLink(text, link)
 
                                 // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
