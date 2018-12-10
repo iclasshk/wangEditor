@@ -2758,7 +2758,7 @@ Image.prototype = {
         // tabs 的配置
         var tabsConfig = [{
             title: '上传图片',
-            tpl: '<div class="w-e-up-img-container">\n                    <div id="' + upTriggerId + '" class="w-e-up-btn">\n                        <i class="w-e-icon-upload2"></i>\n                    </div>\n                    <div style="display:none;">\n                        <input id="' + upFileId + '" type="file" multiple="multiple" accept="image/jpg,image/jpeg,image/png,image/gif,image/bmp"/>\n                    </div>\n                    <div>\n                        <input id="' + upLinkId + '" type="text" class="block" placeholder="http://..."/>\n                    </div>\n                </div>',
+            tpl: '<div class="w-e-up-img-container">\n                    <div id="' + upTriggerId + '" class="w-e-up-btn">\n                        <i class="w-e-icon-upload2"></i>\n                    </div>\n                    <div>\n                        <input id="' + upLinkId + '" type="text" class="block" placeholder="\u8D85\u94FE\u63A5 http://..."/>\n                    </div>\n                    <div style="display:none;">\n                        <input id="' + upFileId + '" type="file" multiple="multiple" accept="image/jpg,image/jpeg,image/png,image/gif,image/bmp"/>\n                    </div>\n                </div>',
             events: [{
                 // 触发选择图片
                 selector: '#' + upTriggerId,
@@ -2787,8 +2787,10 @@ Image.prototype = {
 
                     // 获取选中的 file 对象列表
                     var fileList = fileElem.files;
+                    var $upLink = $('#' + upLinkId);
+                    var link = $upLink.val().trim();
                     if (fileList.length) {
-                        uploadImg.uploadImg(fileList);
+                        uploadImg.uploadImg(fileList, link);
                     }
 
                     // 返回 true 可关闭 panel
@@ -2798,16 +2800,17 @@ Image.prototype = {
         }, // first tab end
         {
             title: '网络图片',
-            tpl: '<div>\n                    <input id="' + linkUrlId + '" type="text" class="block" placeholder="\u56FE\u7247\u94FE\u63A5"/></td>\n                    <div class="w-e-button-container">\n                        <button id="' + linkBtnId + '" class="right">\u63D2\u5165</button>\n                    </div>\n                    <div>\n                        <input id="' + linkLinkId + '" type="text" class="block" placeholder="http://..."/>\n                    </div>\n                </div>',
+            tpl: '<div>\n                    <input id="' + linkUrlId + '" type="text" class="block" placeholder="\u56FE\u7247\u94FE\u63A5"/></td>\n                    <div>\n                        <input id="' + linkLinkId + '" type="text" class="block" placeholder="\u8D85\u94FE\u63A5 http://..."/>\n                    </div>\n                    <div class="w-e-button-container">\n                        <button id="' + linkBtnId + '" class="right">\u63D2\u5165</button>\n                    </div>\n                </div>',
             events: [{
                 selector: '#' + linkBtnId,
                 type: 'click',
                 fn: function fn() {
                     var $linkUrl = $('#' + linkUrlId);
                     var url = $linkUrl.val().trim();
-
+                    var $linkLink = $('#' + linkLinkId);
+                    var link = $linkLink.val().trim();
                     if (url) {
-                        uploadImg.insertLinkImg(url);
+                        uploadImg.insertLinkImg(url, link);
                     }
 
                     // 返回 true 表示函数执行结束之后关闭 panel
@@ -4042,7 +4045,7 @@ UploadImg.prototype = {
     },
 
     // 根据链接插入图片
-    insertLinkImg: function insertLinkImg(link) {
+    insertLinkImg: function insertLinkImg(link, url) {
         var _this2 = this;
 
         if (!link) {
@@ -4063,7 +4066,11 @@ UploadImg.prototype = {
             }
         }
 
-        editor.cmd.do('insertHTML', '<img src="' + link + '" style="max-width:100%;"/>');
+        if (url != null) {
+            editor.cmd.do('insertHTML', '<a href="' + url + '" target="_blank"><img src="' + link + '" style="max-width:100%;"/></a>');
+        } else {
+            editor.cmd.do('insertHTML', '<img src="' + link + '" style="max-width:100%;"/>');
+        }
 
         // 验证图片 url 是否有效，无效的话给出提示
         var img = document.createElement('img');
@@ -4088,7 +4095,7 @@ UploadImg.prototype = {
     },
 
     // 上传图片
-    uploadImg: function uploadImg(files) {
+    uploadImg: function uploadImg(files, url) {
         var _this3 = this;
 
         if (!files || !files.length) {
@@ -4274,7 +4281,7 @@ UploadImg.prototype = {
                             // 将图片插入编辑器
                             var data = result.data || [];
                             data.forEach(function (link) {
-                                _this3.insertLinkImg(link);
+                                _this3.insertLinkImg(link, url);
                             });
                         }
 
@@ -4320,7 +4327,7 @@ UploadImg.prototype = {
                 var reader = new FileReader();
                 reader.readAsDataURL(file);
                 reader.onload = function () {
-                    _this.insertLinkImg(this.result);
+                    _this.insertLinkImg(this.result, url);
                 };
             });
         }

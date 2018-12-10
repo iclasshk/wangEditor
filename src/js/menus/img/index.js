@@ -143,11 +143,11 @@ Image.prototype = {
                     <div id="${upTriggerId}" class="w-e-up-btn">
                         <i class="w-e-icon-upload2"></i>
                     </div>
-                    <div style="display:none;">
-                        <input id="${upFileId}" type="file" multiple="multiple" accept="image/jpg,image/jpeg,image/png,image/gif,image/bmp"/>
-                    </div>
                     <div>
                         <input id="${upLinkId}" type="text" class="block" placeholder="超链接 http://..."/>
+                    </div>
+                    <div style="display:none;">
+                        <input id="${upFileId}" type="file" multiple="multiple" accept="image/jpg,image/jpeg,image/png,image/gif,image/bmp"/>
                     </div>
                 </div>`,
                 events: [
@@ -180,8 +180,10 @@ Image.prototype = {
 
                             // 获取选中的 file 对象列表
                             const fileList = fileElem.files
+                            const $upLink = $('#' + upLinkId)
+                            const link = $upLink.val().trim()
                             if (fileList.length) {
-                                uploadImg.uploadImg(fileList)
+                                uploadImg.uploadImg(fileList, link)
                             }
 
                             // 返回 true 可关闭 panel
@@ -194,11 +196,11 @@ Image.prototype = {
                 title: '网络图片',
                 tpl: `<div>
                     <input id="${linkUrlId}" type="text" class="block" placeholder="图片链接"/></td>
-                    <div class="w-e-button-container">
-                        <button id="${linkBtnId}" class="right">插入</button>
-                    </div>
                     <div>
                         <input id="${linkLinkId}" type="text" class="block" placeholder="超链接 http://..."/>
+                    </div>
+                    <div class="w-e-button-container">
+                        <button id="${linkBtnId}" class="right">插入</button>
                     </div>
                 </div>`,
                 events: [
@@ -208,9 +210,10 @@ Image.prototype = {
                         fn: () => {
                             const $linkUrl = $('#' + linkUrlId)
                             const url = $linkUrl.val().trim()
-
+                            const $linkLink = $('#' + linkLinkId)
+                            const link = $linkLink.val().trim()
                             if (url) {
-                                uploadImg.insertLinkImg(url)
+                                uploadImg.insertLinkImg(url, link)
                             }
 
                             // 返回 true 表示函数执行结束之后关闭 panel

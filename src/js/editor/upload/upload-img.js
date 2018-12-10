@@ -33,7 +33,7 @@ UploadImg.prototype = {
     },
 
     // 根据链接插入图片
-    insertLinkImg: function (link) {
+    insertLinkImg: function (link, url) {
         if (!link) {
             return
         }
@@ -52,7 +52,12 @@ UploadImg.prototype = {
             }
         }
 
-        editor.cmd.do('insertHTML', `<img src="${link}" style="max-width:100%;"/>`)
+        if(url != null) {
+            editor.cmd.do('insertHTML', `<a href="${url}" target="_blank"><img src="${link}" style="max-width:100%;"/></a>`)
+        }
+        else{
+            editor.cmd.do('insertHTML', `<img src="${link}" style="max-width:100%;"/>`)
+        }
 
         // 验证图片 url 是否有效，无效的话给出提示
         let img = document.createElement('img')
@@ -77,7 +82,7 @@ UploadImg.prototype = {
     },
 
     // 上传图片
-    uploadImg: function (files) {
+    uploadImg: function (files, url) {
         if (!files || !files.length) {
             return
         }
@@ -261,7 +266,7 @@ UploadImg.prototype = {
                             // 将图片插入编辑器
                             const data = result.data || []
                             data.forEach(link => {
-                                this.insertLinkImg(link)
+                                this.insertLinkImg(link, url)
                             })
                         }
 
@@ -307,7 +312,7 @@ UploadImg.prototype = {
                 const reader = new FileReader()
                 reader.readAsDataURL(file)
                 reader.onload = function () {
-                    _this.insertLinkImg(this.result)
+                    _this.insertLinkImg(this.result, url)
                 }
             })
         }
