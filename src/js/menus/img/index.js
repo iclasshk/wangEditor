@@ -140,11 +140,11 @@ Image.prototype = {
             {
                 title: '上传图片',
                 tpl: `<div class="w-e-up-img-container">
-                    <div id="${upTriggerId}" class="w-e-up-btn">
-                        <i class="w-e-icon-upload2"></i>
-                    </div>
                     <div>
                         <input id="${upLinkId}" type="text" class="block" placeholder="超链接 http://..."/>
+                    </div>
+                    <div id="${upTriggerId}" class="w-e-up-btn">
+                        <i class="w-e-icon-upload2"></i>
                     </div>
                     <div style="display:none;">
                         <input id="${upFileId}" type="file" multiple="multiple" accept="image/jpg,image/jpeg,image/png,image/gif,image/bmp"/>
